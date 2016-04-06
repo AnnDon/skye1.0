@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd" >
+
+	<!--登录页面不过滤 -->
+	
+	<security:http auto-config="true" use-expressions="true" access-denied-page="test/denied">
+		<security:intercept-url pattern="/test/login.do"/>
+		<security:intercept-url pattern="/test/hello.do" access="permitAll"/>
+		<security:intercept-url pattern="/test/admin.do" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/test/common.do" access="hasRole('ROLE_USER')"/>
+		<security:form-login login-page="/test/hello.do" authentication-failure-url="/test/hello.do?error=true"
+					default-target-url="/test/success.do"/>
+		<security:logout invalidate-session="true" logout-success-url="/test/hello.do" logout-url="/test/logout"/>
+	</security:http>
+	  <!-- 对密码进行MD5编码 -->  
+    <bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/> 
+	 <!--   
+        通过 customUserDetailsService,Spring会自动的用户的访问级别.  
+        也可以理解成:以后我们和数据库操作就是通过customUserDetailsService来进行关联.  
+     -->  
+     
+     <security:custom-filter  ref=""/>
+     
+    <bean id="customUserDetailsService" class="org.liukai.tutorial.service.CustomUserDetailsService"/>  
+    
+    <!-- 指定一个自定义的authentication-manager :customUserDetailsService -->  
+    <security:authentication-manager>  
+            <security:authentication-provider user-service-ref="customUserDetailsService">  
+                    <security:password-encoder ref="passwordEncoder"/>  
+            </security:authentication-provider>  
+    </security:authentication-manager>  
+</beans>
