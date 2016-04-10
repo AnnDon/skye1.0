@@ -20,10 +20,27 @@
        		<property name="suffix" value=".jsp"></property>
        </bean>
        <!--  -->
-       <context:component-scan base-package="com.skye.test.web"></context:component-scan>
+       <context:component-scan base-package="com.skye.**.web"></context:component-scan>
+       <context:component-scan base-package="com.skye.**.service.impl"></context:component-scan>
+       <context:component-scan base-package="com.skye.**.dao.impl"></context:component-scan>
+       <context:component-scan base-package="com.**"></context:component-scan>
        
+       <!-- spring3.1扩展 -->
+       <bean id="handlerMapping" class="com.skye.core.mvc.handlermapping.SkyeRequestMappingHandlerMapping">
+       		<property name="interceptors">
+       		  <list>
+       		    <ref bean="localeChangeInterceptor"/>
+       		  </list>
+       		</property>
+       </bean>
+       <!-- 本地化支持 -->
+       <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+       		<property name="paramName" value="siteLanguage"></property>
+       </bean>
        <!-- 完成请求和注解POJO的映射 -->
-       <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+<!--   <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />-->       
+      <!-- 完成请求和方法名的映射的适配器 -->
+       <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 	   
 	   <!-- 引入spring其他配置文件 -->
 	   <import resource="spring-bean.xml"/>

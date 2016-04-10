@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value="/hello")
 public class HelloController{
-	@RequestMapping("/hello.do")
+	//@RequestMapping("/hello.do")
+	@ResponseBody
 	public ModelAndView hello(@RequestParam(value = "error", required = false) boolean error,  
             ModelMap model){
 		Map<String, Object>  model1 = new HashMap<String, Object>();
@@ -26,7 +28,7 @@ public class HelloController{
 	        } 
 		return modelAndView;
 	}
-	@RequestMapping("/success.do")
+	//@RequestMapping("/success.do")
 	public String login(@RequestParam(value="username")String username,String age) throws UnsupportedEncodingException{
 		//System.out.println("username:"+new String(username.getBytes("iso8859-1"), "utf-8").toString());
 		System.out.println("username:"+username);
@@ -34,12 +36,12 @@ public class HelloController{
 		System.out.println("弟弟");
 		return "test/success";
 	}
-	@RequestMapping("/denied.do")
+	//@RequestMapping("/denied.do")
 	public String denied(){
 		
 		return "test/deniedpage";
 	}
-	@RequestMapping("/admin.do")
+	//@RequestMapping("/admin.do")
 	public String admin(){
 		
 		return "test/admin";

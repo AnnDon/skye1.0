@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.skye.test.demo.vo.StudentVO">
+	<resultMap type="com.skye.test.demo.vo.StudentVO" id="student">
+	    <result property="id" column="id"/>
+	    <result property="username" column="username"/>
+	    <result property="sex" column="sex"/>
+	    <result property="age" column="age"/>
+	</resultMap>
+	<select id="queryStudents"  parameterType="com.skye.test.demo.vo.StudentVO" resultMap="student">
+	  select id,username,sex,age from students
+	</select>
+</mapper>
